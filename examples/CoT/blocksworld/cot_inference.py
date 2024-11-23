@@ -52,7 +52,7 @@ def main(model_dir, data_path, prompt_path, disable_log=False, batch_size=1, con
         prompt = json.load(f)
 
     reasoner = CoTReasoner(base_model, temperature=temperature, model_type="chat" if model_dir in ["openai", "google", "claude"] else "completion")
-    evaluator = BWEvaluator(config_file=config_file, domain_file=domain_file, data_path=data_path, init_prompt=prompt, disable_log=disable_log, output_extractor=lambda x:x, sample_prompt_type="rap") # rap prompt includes cot
+    evaluator = BWEvaluator(config_file=config_file, domain_file=domain_file, data_path=data_path, init_prompt=prompt, log_dir=log_dir, disable_log=disable_log, output_extractor=lambda x:x, sample_prompt_type="rap") # rap prompt includes cot
     accuracy = evaluator.evaluate(reasoner, shuffle_prompt=True, num_shot=4, resume=resume, log_dir=log_dir)
     print(f'accuracy: {accuracy:.4f}')
     return 0

@@ -45,6 +45,7 @@ class BWEvaluator(Evaluator):
                  domain_file,
                  data_path,
                  init_prompt,
+                 log_dir,
                  disable_log=False,
                  disable_tqdm=False,
                  output_extractor=rap_bw_extractor,
@@ -61,7 +62,7 @@ class BWEvaluator(Evaluator):
         self.disable_tqdm = disable_tqdm
         self.sample_prompt_type = sample_prompt_type
 
-        self.lm_plan_file = "tmp_plan.txt"
+        self.lm_plan_file = f"{log_dir}/tmp_plan.txt"
         self.config_file = config_file
         self.domain_file = domain_file
 

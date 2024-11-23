@@ -38,7 +38,7 @@ def RAP_bw(base_model: LanguageModel,
                       goal_reward_default=goal_reward_default)
     search_algo = search_algo(**search_algo_params)
     reasoner = Reasoner(world_model=world_model, search_config=config, search_algo=search_algo)
-    evaluator = BWEvaluator(config_file=config_file, domain_file=domain_file, data_path=data_path, init_prompt=prompt, disable_log=disable_log)
+    evaluator = BWEvaluator(config_file=config_file, domain_file=domain_file, data_path=data_path, init_prompt=prompt, log_dir=log_dir, disable_log=disable_log)
     accuracy = evaluator.evaluate(reasoner, shuffle_prompt=True, num_shot=4, resume=resume, log_dir=log_dir)
     print(accuracy)
 
@@ -224,4 +224,4 @@ if __name__ == '__main__':
                lm_plan_file=lm_plan_file, **kwargs)
 
 
-    fire.Fire(llama2_main) # user will need to switch the model in the code
+    fire.Fire(llama_hf_main) # user will need to switch the model in the code

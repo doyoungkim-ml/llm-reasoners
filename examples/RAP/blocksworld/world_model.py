@@ -90,6 +90,8 @@ class BlocksWorldModel(WorldModel):
         world_update_prompt = self.prompt[key].format(block_states, action.capitalize() + ".")
         world_output = self.base_model.generate([world_update_prompt],
                                     eos_token_id="\n", hide_input=True, temperature=0).text[0].strip()
+        world_output = world_output.split("\n")[0]
+        # print(f"input: {world_update_prompt}, world_output: {world_output}, block_states: {block_states}")
         new_state = utils.apply_change(world_output, block_states)
         return new_state
 

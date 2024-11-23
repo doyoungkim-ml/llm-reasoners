@@ -177,7 +177,7 @@ def tot_bw(base_model: LanguageModel,
     else:
         raise NotImplementedError
     reasoner = Reasoner(world_model=world_model, search_config=config, search_algo=search_algo)
-    evaluator = BWEvaluator(config_file=config_file, domain_file=domain_file, data_path=data_path, init_prompt=prompt, disable_log=disable_log, output_extractor=output_extractor)
+    evaluator = BWEvaluator(config_file=config_file, domain_file=domain_file, data_path=data_path, init_prompt=prompt, disable_log=disable_log, output_extractor=output_extractor, log_dir=log_dir)
     accuracy = evaluator.evaluate(reasoner, shuffle_prompt=True, num_shot=4, resume=resume, log_dir=log_dir)
     print(accuracy)
 
@@ -229,12 +229,15 @@ if __name__ == '__main__':
             torch.cuda.manual_seed(0)
             torch.backends.cudnn.deterministic = True
 
-        if base_lm == 'llama2':
-            from reasoners.lm import Llama2Model
-            llama_model = Llama2Model(model_dir, llama_size, max_batch_size=batch_size)
-        elif base_lm == 'llama3':
-            from reasoners.lm import Llama3Model
-            llama_model = Llama3Model(model_dir, llama_size, max_batch_size=batch_size)
+        # if base_lm == 'llama2' or :
+        #     from reasoners.lm import Llama2Model
+        #     llama_model = Llama2Model(model_dir, llama_size, max_batch_size=batch_size)
+        # elif base_lm == 'llama3':
+        #     from reasoners.lm import Llama3Model
+        #     llama_model = Llama3Model(model_dir, llama_size, max_batch_size=batch_size)
+        if base_lm == 'llama2' or base_lm == 'llama3':
+            from reasoners.lm import HFModel
+            llama_model = HFModel(model_dir, model_dir)
         else:
             from reasoners.lm import ExLlamaModel  # Maybe other transformer models also support
             device = torch.device("cuda:0")
